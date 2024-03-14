@@ -3,7 +3,7 @@ name: Drupal Tests
 on:
   push:
     branches:
-      - feature/behat-test
+      - main
 
 jobs:
   test:
