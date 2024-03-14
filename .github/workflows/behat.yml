@@ -3,7 +3,7 @@ name: Drupal Tests
 on:
   push:
     branches:
-      - main
+      - feature/behat-test
 
 jobs:
   test:
@@ -11,6 +11,12 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
+
+#      - name: Install Platform.sh CLI
+#        run: curl -sS https://platform.sh/cli/installer | php
+
+#      - name: Open Platform.sh Tunnel
+#        run: ~/.platformsh/bin/platform tunnel:open -p n2wop6ggfbwbm -e nj-transit-som
 
       - name: Setup Lando
         uses: lando/setup-lando@v2
@@ -67,6 +73,9 @@ jobs:
 
       - name: Run drush cr Command
         run: vendor/bin/drush cr
+
+#      - name: Close tunnel
+#        run: ~/.platformsh/bin/platform tunnel:close --all -y
 
       - name: Close lando
         run: lando stop
