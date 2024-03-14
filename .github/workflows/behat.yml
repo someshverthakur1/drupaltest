@@ -83,5 +83,5 @@ jobs:
 #      - name: Close tunnel
 #        run: ~/.platformsh/bin/platform tunnel:close --all -y
 
-      - name: Close lando
-        run: lando stop
+#      - name: Close lando
+#        run: lando stop
