@@ -78,7 +78,10 @@ jobs:
           lando vendor/bin/drush cr
 
       - name: Run drush cr Command
-        run: lando vendor/bin/drush cr
+        run: lando drush cr
+
+      - name: Run drush cr Command 2
+        run: drush cr
 
 #      - name: Close tunnel
 #        run: ~/.platformsh/bin/platform tunnel:close --all -y
