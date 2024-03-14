@@ -1,0 +1,72 @@
+name: Drupal Tests
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup Lando
+        uses: lando/setup-lando@v2
+
+      - name: Lando start
+        run: lando start
+
+      - name: check lando info
+        run: lando info
+
+      - name: Configure Database Connection
+        run: |
+          # Update settings.local.php with database credentials
+          echo "<?php
+          \$databases['default']['default'] = array(
+            'database' => 'drupal10',
+            'username' => 'drupal10',
+            'password' => 'drupal10',
+            'host' => 'database',
+            'port' => '3306',
+            'driver' => 'mysql',
+            'prefix' => '',
+          );
+          \$settings['hash_salt'] = '6HhsaKMpNOs6lUs5rZcxRpnQ8XRqcR_QnCO2au9J5E6-Oo6SxJPJ5sUc1X1rKsDawrhVb9KP6Q';
+          " > web/sites/default/settings.local.php
+
+      - name: Validate Composer
+        run: composer validate
+
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Composer Cache
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Install Composer Dependencies
+        run: composer --no-interaction install --no-progress --prefer-dist --no-suggest --optimize-autoloader
+
+      - name: Run drush site install Command
+        run: |
+          vendor/bin/drush si --account-name=admin --account-pass=admin
+          vendor/bin/drush config-set system.site uuid 92e6a16d-9a3a-4980-bcb1-3ca62345624d
+          vendor/bin/drush entity-delete shortcut
+          vendor/bin/drush cr
+          vendor/bin/drush cim
+          vendor/bin/drush cr
+
+      - name: Run drush cr Command
+        run: vendor/bin/drush cr
+
+      - name: Close lando
+        run: lando stop
