@@ -24,6 +24,9 @@ jobs:
       - name: Lando rebuild
         run: lando rebuild -y
 
+      - name: Lando MySQL
+        run: lando mysql
+
       - name: Lando start
         run: lando start
 
