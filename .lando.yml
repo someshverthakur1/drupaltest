@@ -2,4 +2,6 @@ name: drupaltest
 recipe: drupal10
 config:
   webroot: web
-  database: mysql:5.7
+services:
+  database:
+    type: mysql:8.0
