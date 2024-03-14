@@ -26,9 +26,6 @@ jobs:
       - name: Lando rebuild
         run: lando rebuild -y
 
-      - name: Lando MySQL
-        run: lando mysql
-
       - name: Lando start
         run: lando start
 
@@ -37,7 +34,7 @@ jobs:
 
       - name: Configure Database Connection
         run: |
-          # Update settings.local.php with database credentials
+          # Update settings.php with database credentials
           echo "<?php
           \$databases['default']['default'] = array(
             'database' => 'drupal10',
@@ -49,7 +46,7 @@ jobs:
             'prefix' => '',
           );
           \$settings['hash_salt'] = '6HhsaKMpNOs6lUs5rZcxRpnQ8XRqcR_QnCO2au9J5E6-Oo6SxJPJ5sUc1X1rKsDawrhVb9KP6Q';
-          " > web/sites/default/settings.local.php
+          " > web/sites/default/settings.php
 
       - name: Validate Composer
         run: composer validate
