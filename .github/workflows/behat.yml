@@ -69,12 +69,7 @@ jobs:
 
       - name: Run drush site install Command
         run: |
-          lando vendor/bin/drush si --account-name=admin --account-pass=admin
-          lando vendor/bin/drush config-set system.site uuid 92e6a16d-9a3a-4980-bcb1-3ca62345624d
-          lando vendor/bin/drush entity-delete shortcut
-          lando vendor/bin/drush cr
-          lando vendor/bin/drush cim
-          lando vendor/bin/drush cr
+          lando drush si --account-name=admin --account-pass=admin
 
       - name: Run drush cr Command
         run: lando drush cr
