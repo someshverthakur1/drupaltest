@@ -70,15 +70,15 @@ jobs:
 
       - name: Run drush site install Command
         run: |
-          vendor/bin/drush si --account-name=admin --account-pass=admin
-          vendor/bin/drush config-set system.site uuid 92e6a16d-9a3a-4980-bcb1-3ca62345624d
-          vendor/bin/drush entity-delete shortcut
-          vendor/bin/drush cr
-          vendor/bin/drush cim
-          vendor/bin/drush cr
+          lando vendor/bin/drush si --account-name=admin --account-pass=admin
+          lando vendor/bin/drush config-set system.site uuid 92e6a16d-9a3a-4980-bcb1-3ca62345624d
+          lando vendor/bin/drush entity-delete shortcut
+          lando vendor/bin/drush cr
+          lando vendor/bin/drush cim
+          lando vendor/bin/drush cr
 
       - name: Run drush cr Command
-        run: vendor/bin/drush cr
+        run: lando vendor/bin/drush cr
 
 #      - name: Close tunnel
 #        run: ~/.platformsh/bin/platform tunnel:close --all -y
