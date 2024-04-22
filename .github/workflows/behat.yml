@@ -15,12 +15,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-#      - name: Install Platform.sh CLI
-#        run: curl -sS https://platform.sh/cli/installer | php
-
-#      - name: Open Platform.sh Tunnel
-#        run: ~/.platformsh/bin/platform tunnel:open -p n2wop6ggfbwbm -e nj-transit-som
-
       - name: Setup Lando
         uses: lando/setup-lando@v2
         with:
